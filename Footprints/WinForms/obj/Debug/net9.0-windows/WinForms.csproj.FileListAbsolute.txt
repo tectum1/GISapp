@@ -1,0 +1,6 @@
+C:\Users\Dylan\RiderProjects\GISapp\Footprints\WinForms\obj\Debug\net9.0-windows\WinForms.csproj.AssemblyReference.cache
+C:\Users\Dylan\RiderProjects\GISapp\Footprints\WinForms\obj\Debug\net9.0-windows\WinForms.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dylan\RiderProjects\GISapp\Footprints\WinForms\obj\Debug\net9.0-windows\WinForms.AssemblyInfoInputs.cache
+C:\Users\Dylan\RiderProjects\GISapp\Footprints\WinForms\obj\Debug\net9.0-windows\WinForms.AssemblyInfo.cs
+C:\Users\Dylan\RiderProjects\GISapp\Footprints\WinForms\obj\Debug\net9.0-windows\WinForms.csproj.CoreCompileInputs.cache
+C:\Users\Dylan\RiderProjects\GISapp\Footprints\WinForms\obj\Debug\net9.0-windows\WinForms.sourcelink.json

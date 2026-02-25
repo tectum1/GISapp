@@ -21,14 +21,14 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
         ],
         "originalTargetFrameworks": [
-          "net10.0"
+          "net10.0-windows"
         ],
         "sources": {
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net10.0": {
-            "targetAlias": "net10.0",
+          "net10.0-windows7.0": {
+            "targetAlias": "net10.0-windows",
             "projectReferences": {
               "C:\\Users\\Dylan\\RiderProjects\\GISapp\\Footprints\\Core\\Core.csproj": {
                 "projectPath": "C:\\Users\\Dylan\\RiderProjects\\GISapp\\Footprints\\Core\\Core.csproj"
@@ -49,8 +49,8 @@
         "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
-        "net10.0": {
-          "targetAlias": "net10.0",
+        "net10.0-windows7.0": {
+          "targetAlias": "net10.0-windows",
           "imports": [
             "net461",
             "net462",
@@ -362,14 +362,14 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
         ],
         "originalTargetFrameworks": [
-          "net10.0"
+          "net10.0-windows"
         ],
         "sources": {
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net10.0": {
-            "targetAlias": "net10.0",
+          "net10.0-windows7.0": {
+            "targetAlias": "net10.0-windows",
             "projectReferences": {}
           }
         },
@@ -386,8 +386,8 @@
         "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
-        "net10.0": {
-          "targetAlias": "net10.0",
+        "net10.0-windows7.0": {
+          "targetAlias": "net10.0-windows",
           "imports": [
             "net461",
             "net462",

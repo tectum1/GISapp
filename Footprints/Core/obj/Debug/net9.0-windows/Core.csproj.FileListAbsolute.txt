@@ -1,0 +1,12 @@
+C:\Users\Dylan\RiderProjects\GISapp\Footprints\Core\bin\Debug\net9.0-windows\Core.deps.json
+C:\Users\Dylan\RiderProjects\GISapp\Footprints\Core\bin\Debug\net9.0-windows\Core.dll
+C:\Users\Dylan\RiderProjects\GISapp\Footprints\Core\bin\Debug\net9.0-windows\Core.pdb
+C:\Users\Dylan\RiderProjects\GISapp\Footprints\Core\obj\Debug\net9.0-windows\Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dylan\RiderProjects\GISapp\Footprints\Core\obj\Debug\net9.0-windows\Core.AssemblyInfoInputs.cache
+C:\Users\Dylan\RiderProjects\GISapp\Footprints\Core\obj\Debug\net9.0-windows\Core.AssemblyInfo.cs
+C:\Users\Dylan\RiderProjects\GISapp\Footprints\Core\obj\Debug\net9.0-windows\Core.csproj.CoreCompileInputs.cache
+C:\Users\Dylan\RiderProjects\GISapp\Footprints\Core\obj\Debug\net9.0-windows\Core.sourcelink.json
+C:\Users\Dylan\RiderProjects\GISapp\Footprints\Core\obj\Debug\net9.0-windows\Core.dll
+C:\Users\Dylan\RiderProjects\GISapp\Footprints\Core\obj\Debug\net9.0-windows\refint\Core.dll
+C:\Users\Dylan\RiderProjects\GISapp\Footprints\Core\obj\Debug\net9.0-windows\Core.pdb
+C:\Users\Dylan\RiderProjects\GISapp\Footprints\Core\obj\Debug\net9.0-windows\ref\Core.dll

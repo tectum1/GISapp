@@ -6,6 +6,13 @@ using System.IO;
 
 public class ApiClient
 {
+    
+    public static Action<string>? Logger { get; set; }
+    private static void WriteLog(string message)
+    {
+        if (Logger != null) Logger(message);
+        else Console.WriteLine(message);
+    }
 
     public static string quadkeyToUrl(string quadkey)
     {
@@ -29,7 +36,7 @@ public class ApiClient
 
         if (returnURL == "")
         {
-            Console.WriteLine("URL not found in dataset-links.csv. Exiting...");
+            WriteLog("URL not found in dataset-links.csv. Exiting...");
             Environment.Exit(-1);
         }
         
@@ -47,27 +54,27 @@ public class ApiClient
         
             // Create a local file stream and copy the data
             string localFile = dir + "\\MS_BuildingFootprints_" + quadkey + ".geojson.gz";
-            Console.WriteLine("localFile: " + localFile);
+            WriteLog("localFile: " + localFile);
             string targetFilePath = localFile.Replace(".gz", "");
             if (File.Exists(targetFilePath))
             {
-                Console.WriteLine("File exists! Download skipped.");
+                WriteLog("File exists! Download skipped.");
                 return "";
             }
 
             using FileStream fileStream = File.Create(localFile);
             await responseStream.CopyToAsync(fileStream);
 
-            Console.WriteLine($"File downloaded successfully to: {localFile}");
+            WriteLog($"File downloaded successfully to: {localFile}");
             return localFile;
         }
         catch (HttpRequestException ex)
         {
-            Console.WriteLine($"Failed to download file. Status code: {ex.Message}");
+            WriteLog($"Failed to download file. Status code: {ex.Message}");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"An error occurred: {ex.Message}");
+            WriteLog($"An error occurred: {ex.Message}");
         }
         return "";
     }
@@ -76,12 +83,12 @@ public class ApiClient
     {
         if (!File.Exists(filepath))  // Handle non existant file
         {
-            Console.WriteLine($"Filepath: {filepath}. Does not exist");
+            WriteLog($"Filepath: {filepath}. Does not exist");
             return;
         }
         if (!filepath.Contains(".gz"))  // Handle not extractable file
         {
-            Console.WriteLine($"File extension .gz not found");
+            WriteLog($"File extension .gz not found");
             return;
         }
         string outputPath = filepath.Replace(".gz", "");
@@ -92,8 +99,21 @@ public class ApiClient
         {
             decompressor.CopyTo(outputFileStream); // Decompress data to output file
         }
-        Console.WriteLine($"{filepath} has been extracted to {outputPath}");
+        WriteLog($"{filepath} has been extracted to {outputPath}");
         File.Delete(filepath);
-        Console.WriteLine($"{filepath} removed");
+        WriteLog($"{filepath} removed");
+        string readText = File.ReadAllText(outputPath);
+        string[] textLines = readText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+        int lastIdx = textLines.Length;
+        int featuresFound = 0;
+        for (int i=0; i<lastIdx; i++)
+        {
+            if (textLines[i].Contains("Feature"))
+            {
+                featuresFound++;
+            }
+        }
+        WriteLog($"{featuresFound} Building Footprints Downloaded...");
     }
+    
 }
