@@ -100,6 +100,23 @@ public partial class Form1 : Form
         txtLog.AppendText(message + Environment.NewLine);
     }
 
+    private void btnBrowseDownloadDir_Click(object sender, EventArgs e)
+    {
+        using FolderBrowserDialog dialog = new();
+        dialog.Description = "Select destination folder for downloaded footprints";
+        dialog.UseDescriptionForTitle = true;
+
+        if (Directory.Exists(txtDownloadDir.Text))
+        {
+            dialog.InitialDirectory = txtDownloadDir.Text;
+        }
+
+        if (dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+        {
+            txtDownloadDir.Text = dialog.SelectedPath;
+        }
+    }
+
     private async void btnGeocode_Click(object sender, EventArgs e)
     {
         btnGeocode.Enabled = false;

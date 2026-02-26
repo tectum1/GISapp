@@ -9,8 +9,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aabace8c-a358-4148-bb95-27abfb33e912" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Footprints/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Footprints/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WinForms/Form1.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/Form1.Designer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WinForms/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/Form1.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WinForms/bin/Debug/net10.0-windows/WinForms.dll" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/bin/Debug/net10.0-windows/WinForms.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WinForms/bin/Debug/net10.0-windows/WinForms.exe" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/bin/Debug/net10.0-windows/WinForms.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WinForms/bin/Debug/net10.0-windows/WinForms.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/bin/Debug/net10.0-windows/WinForms.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.dll" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.sourcelink.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/apphost.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/ref/WinForms.dll" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/ref/WinForms.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/refint/WinForms.dll" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/refint/WinForms.dll" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +133,7 @@
       <option name="presentableId" value="Default" />
       <updated>1772027398570</updated>
       <workItem from="1772027401325" duration="1128000" />
-      <workItem from="1772028555127" duration="3332000" />
+      <workItem from="1772028555127" duration="4015000" />
     </task>
     <servers />
   </component>

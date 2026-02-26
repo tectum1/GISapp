@@ -24,6 +24,7 @@ partial class Form1
     private TextBox txtLat;
     private TextBox txtLon;
     private TextBox txtDownloadDir;
+    private Button btnBrowseDownloadDir;
     private Button btnRun;
     private Button btnLoadGeoJson;
     private Button btnPrev;
@@ -63,6 +64,7 @@ partial class Form1
         this.txtLat = new TextBox();
         this.txtLon = new TextBox();
         this.txtDownloadDir = new TextBox();
+        this.btnBrowseDownloadDir = new Button();
         this.btnRun = new Button();
         this.btnLoadGeoJson = new Button();
         this.btnPrev = new Button();
@@ -118,6 +120,7 @@ partial class Form1
         this.tabFootprints.Controls.Add(this.btnLoadGeoJson);
         this.tabFootprints.Controls.Add(this.txtLog);
         this.tabFootprints.Controls.Add(this.btnRun);
+        this.tabFootprints.Controls.Add(this.btnBrowseDownloadDir);
         this.tabFootprints.Controls.Add(this.txtDownloadDir);
         this.tabFootprints.Controls.Add(this.lblDownloadDir);
         this.tabFootprints.Controls.Add(this.txtLon);
@@ -256,15 +259,25 @@ partial class Form1
         // 
         this.txtDownloadDir.Location = new System.Drawing.Point(112, 81);
         this.txtDownloadDir.Name = "txtDownloadDir";
-        this.txtDownloadDir.Size = new System.Drawing.Size(640, 23);
+        this.txtDownloadDir.Size = new System.Drawing.Size(520, 23);
         this.txtDownloadDir.TabIndex = 5;
+        // 
+        // btnBrowseDownloadDir
+        // 
+        this.btnBrowseDownloadDir.Location = new System.Drawing.Point(640, 80);
+        this.btnBrowseDownloadDir.Name = "btnBrowseDownloadDir";
+        this.btnBrowseDownloadDir.Size = new System.Drawing.Size(110, 25);
+        this.btnBrowseDownloadDir.TabIndex = 6;
+        this.btnBrowseDownloadDir.Text = "Browse...";
+        this.btnBrowseDownloadDir.UseVisualStyleBackColor = true;
+        this.btnBrowseDownloadDir.Click += new System.EventHandler(this.btnBrowseDownloadDir_Click);
         // 
         // btnRun
         // 
         this.btnRun.Location = new System.Drawing.Point(760, 80);
         this.btnRun.Name = "btnRun";
         this.btnRun.Size = new System.Drawing.Size(120, 25);
-        this.btnRun.TabIndex = 6;
+        this.btnRun.TabIndex = 7;
         this.btnRun.Text = "Run";
         this.btnRun.UseVisualStyleBackColor = true;
         this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
