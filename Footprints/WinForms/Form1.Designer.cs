@@ -21,21 +21,21 @@ partial class Form1
     private Button btnUseCoordinates;
     private Label lblGeocodeStatus;
 
+    private Label lblLat;
     private TextBox txtLat;
+    private Label lblLon;
     private TextBox txtLon;
+    private Label lblDownloadDir;
     private TextBox txtDownloadDir;
     private Button btnBrowseDownloadDir;
     private Button btnRun;
     private Button btnLoadGeoJson;
-    private Button btnPrev;
-    private Button btnPlayPause;
-    private Button btnNext;
-    private TextBox txtLog;
-    private Label lblLat;
-    private Label lblLon;
-    private Label lblDownloadDir;
-    private Label lblFeatureIndex;
+    private Label lblScale;
+    private TrackBar trkScale;
+    private Label lblScaleValue;
+    private Label lblBuildingCount;
     private Panel pnlViewer;
+    private TextBox txtLog;
 
     protected override void Dispose(bool disposing)
     {
@@ -61,24 +61,25 @@ partial class Form1
         this.txtGeoLon = new TextBox();
         this.btnUseCoordinates = new Button();
         this.lblGeocodeStatus = new Label();
+        this.lblLat = new Label();
         this.txtLat = new TextBox();
+        this.lblLon = new Label();
         this.txtLon = new TextBox();
+        this.lblDownloadDir = new Label();
         this.txtDownloadDir = new TextBox();
         this.btnBrowseDownloadDir = new Button();
         this.btnRun = new Button();
         this.btnLoadGeoJson = new Button();
-        this.btnPrev = new Button();
-        this.btnPlayPause = new Button();
-        this.btnNext = new Button();
-        this.txtLog = new TextBox();
-        this.lblLat = new Label();
-        this.lblLon = new Label();
-        this.lblDownloadDir = new Label();
-        this.lblFeatureIndex = new Label();
+        this.lblScale = new Label();
+        this.trkScale = new TrackBar();
+        this.lblScaleValue = new Label();
+        this.lblBuildingCount = new Label();
         this.pnlViewer = new Panel();
+        this.txtLog = new TextBox();
         this.tabControlMain.SuspendLayout();
         this.tabGeocode.SuspendLayout();
         this.tabFootprints.SuspendLayout();
+        ((ISupportInitialize)(this.trkScale)).BeginInit();
         this.SuspendLayout();
         // 
         // tabControlMain
@@ -112,13 +113,13 @@ partial class Form1
         // 
         // tabFootprints
         // 
-        this.tabFootprints.Controls.Add(this.pnlViewer);
-        this.tabFootprints.Controls.Add(this.lblFeatureIndex);
-        this.tabFootprints.Controls.Add(this.btnNext);
-        this.tabFootprints.Controls.Add(this.btnPlayPause);
-        this.tabFootprints.Controls.Add(this.btnPrev);
-        this.tabFootprints.Controls.Add(this.btnLoadGeoJson);
         this.tabFootprints.Controls.Add(this.txtLog);
+        this.tabFootprints.Controls.Add(this.pnlViewer);
+        this.tabFootprints.Controls.Add(this.lblBuildingCount);
+        this.tabFootprints.Controls.Add(this.lblScaleValue);
+        this.tabFootprints.Controls.Add(this.trkScale);
+        this.tabFootprints.Controls.Add(this.lblScale);
+        this.tabFootprints.Controls.Add(this.btnLoadGeoJson);
         this.tabFootprints.Controls.Add(this.btnRun);
         this.tabFootprints.Controls.Add(this.btnBrowseDownloadDir);
         this.tabFootprints.Controls.Add(this.txtDownloadDir);
@@ -287,49 +288,51 @@ partial class Form1
         this.btnLoadGeoJson.Location = new System.Drawing.Point(16, 120);
         this.btnLoadGeoJson.Name = "btnLoadGeoJson";
         this.btnLoadGeoJson.Size = new System.Drawing.Size(120, 25);
-        this.btnLoadGeoJson.TabIndex = 7;
+        this.btnLoadGeoJson.TabIndex = 8;
         this.btnLoadGeoJson.Text = "Load GeoJSON";
         this.btnLoadGeoJson.UseVisualStyleBackColor = true;
         this.btnLoadGeoJson.Click += new System.EventHandler(this.btnLoadGeoJson_Click);
         // 
-        // btnPrev
+        // lblScale
         // 
-        this.btnPrev.Location = new System.Drawing.Point(150, 120);
-        this.btnPrev.Name = "btnPrev";
-        this.btnPrev.Size = new System.Drawing.Size(70, 25);
-        this.btnPrev.TabIndex = 8;
-        this.btnPrev.Text = "Prev";
-        this.btnPrev.UseVisualStyleBackColor = true;
-        this.btnPrev.Click += new System.EventHandler(this.btnPrev_Click);
+        this.lblScale.AutoSize = true;
+        this.lblScale.Location = new System.Drawing.Point(160, 125);
+        this.lblScale.Name = "lblScale";
+        this.lblScale.Size = new System.Drawing.Size(34, 15);
+        this.lblScale.TabIndex = 9;
+        this.lblScale.Text = "Scale";
         // 
-        // btnPlayPause
+        // trkScale
         // 
-        this.btnPlayPause.Location = new System.Drawing.Point(230, 120);
-        this.btnPlayPause.Name = "btnPlayPause";
-        this.btnPlayPause.Size = new System.Drawing.Size(90, 25);
-        this.btnPlayPause.TabIndex = 9;
-        this.btnPlayPause.Text = "Play";
-        this.btnPlayPause.UseVisualStyleBackColor = true;
-        this.btnPlayPause.Click += new System.EventHandler(this.btnPlayPause_Click);
+        this.trkScale.Location = new System.Drawing.Point(200, 117);
+        this.trkScale.Maximum = 5000;
+        this.trkScale.Minimum = 500;
+        this.trkScale.Name = "trkScale";
+        this.trkScale.Size = new System.Drawing.Size(210, 45);
+        this.trkScale.SmallChange = 100;
+        this.trkScale.LargeChange = 500;
+        this.trkScale.TabIndex = 10;
+        this.trkScale.TickFrequency = 500;
+        this.trkScale.Value = 1000;
+        this.trkScale.Scroll += new System.EventHandler(this.trkScale_Scroll);
         // 
-        // btnNext
+        // lblScaleValue
         // 
-        this.btnNext.Location = new System.Drawing.Point(330, 120);
-        this.btnNext.Name = "btnNext";
-        this.btnNext.Size = new System.Drawing.Size(70, 25);
-        this.btnNext.TabIndex = 10;
-        this.btnNext.Text = "Next";
-        this.btnNext.UseVisualStyleBackColor = true;
-        this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+        this.lblScaleValue.AutoSize = true;
+        this.lblScaleValue.Location = new System.Drawing.Point(420, 125);
+        this.lblScaleValue.Name = "lblScaleValue";
+        this.lblScaleValue.Size = new System.Drawing.Size(53, 15);
+        this.lblScaleValue.TabIndex = 11;
+        this.lblScaleValue.Text = "1 : 1000";
         // 
-        // lblFeatureIndex
+        // lblBuildingCount
         // 
-        this.lblFeatureIndex.AutoSize = true;
-        this.lblFeatureIndex.Location = new System.Drawing.Point(420, 125);
-        this.lblFeatureIndex.Name = "lblFeatureIndex";
-        this.lblFeatureIndex.Size = new System.Drawing.Size(79, 15);
-        this.lblFeatureIndex.TabIndex = 11;
-        this.lblFeatureIndex.Text = "Feature: 0 / 0";
+        this.lblBuildingCount.AutoSize = true;
+        this.lblBuildingCount.Location = new System.Drawing.Point(520, 125);
+        this.lblBuildingCount.Name = "lblBuildingCount";
+        this.lblBuildingCount.Size = new System.Drawing.Size(122, 15);
+        this.lblBuildingCount.TabIndex = 12;
+        this.lblBuildingCount.Text = "Buildings in 500m: 0";
         // 
         // pnlViewer
         // 
@@ -338,7 +341,7 @@ partial class Form1
         this.pnlViewer.Location = new System.Drawing.Point(16, 155);
         this.pnlViewer.Name = "pnlViewer";
         this.pnlViewer.Size = new System.Drawing.Size(864, 260);
-        this.pnlViewer.TabIndex = 12;
+        this.pnlViewer.TabIndex = 13;
         this.pnlViewer.Paint += new PaintEventHandler(this.pnlViewer_Paint);
         // 
         // txtLog
@@ -349,7 +352,7 @@ partial class Form1
         this.txtLog.ReadOnly = true;
         this.txtLog.ScrollBars = ScrollBars.Vertical;
         this.txtLog.Size = new System.Drawing.Size(864, 120);
-        this.txtLog.TabIndex = 13;
+        this.txtLog.TabIndex = 14;
         // 
         // Form1
         // 
@@ -364,6 +367,7 @@ partial class Form1
         this.tabGeocode.PerformLayout();
         this.tabFootprints.ResumeLayout(false);
         this.tabFootprints.PerformLayout();
+        ((ISupportInitialize)(this.trkScale)).EndInit();
         this.ResumeLayout(false);
     }
 }

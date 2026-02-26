@@ -1,22 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Globalization;
-using System.IO;
-using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Footprints.Core;
 
 namespace Footprints.WinForms;
 
 public partial class Form1 : Form
 {
-    private readonly List<List<PointF>> _features = [];
-    private readonly System.Windows.Forms.Timer _slideshowTimer = new();
-    private int _currentFeatureIndex = -1;
-    private bool _isPlaying;
+    private readonly List<List<GeoPoint>> _allBuildingRingsGeo = [];
+    private readonly List<List<MapPoint>> _visibleBuildingsProjected = [];
+    private string? _loadedGeoJsonPath;
+
+    private double _centerLat;
+    private double _centerLon;
+    private double _centerX;
+    private double _centerY;
+
+    private const double FilterRadiusMeters = 500.0;
+    private const double PixelSizeMetersAt96Dpi = 0.0254 / 96.0;
+    private const double EarthRadiusMeters = 6378137.0;
+    private const double MaxMercatorLatitude = 85.05112878;
 
     public Form1()
     {
@@ -27,10 +29,8 @@ public partial class Form1 : Form
         txtLon.Text = "-94.00000";
         txtDownloadDir.Text = Directory.GetCurrentDirectory();
         ApiClient.Logger = Log;
-
-        _slideshowTimer.Interval = 800;
-        _slideshowTimer.Tick += (_, _) => ShowNextFeature();
-        UpdateFeatureLabel();
+        UpdateScaleLabel();
+        UpdateBuildingCountLabel();
     }
 
     private async void btnRun_Click(object sender, EventArgs e)
@@ -39,15 +39,9 @@ public partial class Form1 : Form
 
         try
         {
-            if (!double.TryParse(txtLat.Text, out double lat))
+            if (!TryGetCenterFromInputs(out double lat, out double lon))
             {
-                MessageBox.Show("Invalid latitude.");
-                return;
-            }
-
-            if (!double.TryParse(txtLon.Text, out double lon))
-            {
-                MessageBox.Show("Invalid longitude.");
+                MessageBox.Show("Invalid latitude or longitude.");
                 return;
             }
 
@@ -63,11 +57,10 @@ public partial class Form1 : Form
             string quadKey = Quadkey.LatLonToQuadKey(lat, lon, levelOfDetail);
             Log($"quadKey: {quadKey}");
 
-            string downloadURL = ApiClient.quadkeyToUrl(quadKey);
-            Log($"downloadURL: {downloadURL}");
+            string downloadUrl = ApiClient.quadkeyToUrl(quadKey);
+            Log($"downloadURL: {downloadUrl}");
 
-            string downloadedFile = await ApiClient.downloadBuildingFootprints(downloadURL, downloadDir, quadKey);
-
+            string downloadedFile = await ApiClient.downloadBuildingFootprints(downloadUrl, downloadDir, quadKey);
             if (string.IsNullOrWhiteSpace(downloadedFile))
             {
                 MessageBox.Show("Download failed (empty file path).");
@@ -75,14 +68,13 @@ public partial class Form1 : Form
             }
 
             Log($"downloadedFile: {downloadedFile}");
-
             ApiClient.extractBF(downloadedFile);
             Log("Extract complete.");
 
             string extractedGeoJson = downloadedFile.Replace(".gz", "");
             if (File.Exists(extractedGeoJson))
             {
-                LoadGeoJson(extractedGeoJson);
+                LoadGeoJson(extractedGeoJson, lat, lon);
             }
         }
         catch (Exception ex)
@@ -158,6 +150,11 @@ public partial class Form1 : Form
         txtLat.Text = txtGeoLat.Text;
         txtLon.Text = txtGeoLon.Text;
         tabControlMain.SelectedTab = tabFootprints;
+
+        if (_loadedGeoJsonPath != null)
+        {
+            RebuildVisibleBuildingsFromCenter();
+        }
     }
 
     private void btnLoadGeoJson_Click(object sender, EventArgs e)
@@ -169,77 +166,39 @@ public partial class Form1 : Form
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {
-            LoadGeoJson(dialog.FileName);
+            if (!TryGetCenterFromInputs(out double lat, out double lon))
+            {
+                MessageBox.Show("Invalid latitude or longitude.");
+                return;
+            }
+
+            LoadGeoJson(dialog.FileName, lat, lon);
         }
     }
 
-    private void btnPrev_Click(object sender, EventArgs e)
+    private void trkScale_Scroll(object sender, EventArgs e)
     {
-        if (_features.Count == 0)
-        {
-            return;
-        }
-
-        _currentFeatureIndex = (_currentFeatureIndex - 1 + _features.Count) % _features.Count;
-        UpdateFeatureLabel();
+        UpdateScaleLabel();
         pnlViewer.Invalidate();
     }
 
-    private void btnPlayPause_Click(object sender, EventArgs e)
-    {
-        if (_features.Count == 0)
-        {
-            return;
-        }
-
-        _isPlaying = !_isPlaying;
-        btnPlayPause.Text = _isPlaying ? "Pause" : "Play";
-
-        if (_isPlaying)
-        {
-            _slideshowTimer.Start();
-        }
-        else
-        {
-            _slideshowTimer.Stop();
-        }
-    }
-
-    private void btnNext_Click(object sender, EventArgs e)
-    {
-        ShowNextFeature();
-    }
-
-    private void ShowNextFeature()
-    {
-        if (_features.Count == 0)
-        {
-            return;
-        }
-
-        _currentFeatureIndex = (_currentFeatureIndex + 1) % _features.Count;
-        UpdateFeatureLabel();
-        pnlViewer.Invalidate();
-    }
-
-    private void LoadGeoJson(string path)
+    private void LoadGeoJson(string path, double centerLat, double centerLon)
     {
         try
         {
             string json = File.ReadAllText(path).TrimStart('\uFEFF').Trim();
-            List<List<PointF>> parsed = ParseFeatures(json);
+            List<List<GeoPoint>> parsed = ParseFeatures(json);
 
-            _features.Clear();
-            _features.AddRange(parsed);
+            _allBuildingRingsGeo.Clear();
+            _allBuildingRingsGeo.AddRange(parsed);
+            _loadedGeoJsonPath = path;
 
-            _currentFeatureIndex = _features.Count > 0 ? 0 : -1;
-            _isPlaying = false;
-            _slideshowTimer.Stop();
-            btnPlayPause.Text = "Play";
-            UpdateFeatureLabel();
-            pnlViewer.Invalidate();
+            _centerLat = centerLat;
+            _centerLon = centerLon;
+            (_centerX, _centerY) = ProjectToWebMercator(_centerLon, _centerLat);
 
-            Log($"Loaded {_features.Count} features from: {path}");
+            RebuildVisibleBuildingsFromCenter();
+            Log($"Loaded {_allBuildingRingsGeo.Count} building footprints from: {path}");
         }
         catch (Exception ex)
         {
@@ -247,16 +206,58 @@ public partial class Form1 : Form
         }
     }
 
-    private List<List<PointF>> ParseFeatures(string json)
+    private void RebuildVisibleBuildingsFromCenter()
     {
-        List<List<PointF>> result = [];
+        if (!TryGetCenterFromInputs(out _centerLat, out _centerLon))
+        {
+            return;
+        }
+
+        (_centerX, _centerY) = ProjectToWebMercator(_centerLon, _centerLat);
+        _visibleBuildingsProjected.Clear();
+
+        foreach (List<GeoPoint> ring in _allBuildingRingsGeo)
+        {
+            if (ring.Count < 3)
+            {
+                continue;
+            }
+
+            List<MapPoint> projected = new(ring.Count);
+            double sumX = 0;
+            double sumY = 0;
+
+            foreach (GeoPoint point in ring)
+            {
+                (double x, double y) = ProjectToWebMercator(point.Lon, point.Lat);
+                projected.Add(new MapPoint(x, y));
+                sumX += x;
+                sumY += y;
+            }
+
+            double centroidX = sumX / projected.Count;
+            double centroidY = sumY / projected.Count;
+            double distanceToCenter = Math.Sqrt(Math.Pow(centroidX - _centerX, 2) + Math.Pow(centroidY - _centerY, 2));
+
+            if (distanceToCenter <= FilterRadiusMeters)
+            {
+                _visibleBuildingsProjected.Add(projected);
+            }
+        }
+
+        UpdateBuildingCountLabel();
+        pnlViewer.Invalidate();
+    }
+
+    private List<List<GeoPoint>> ParseFeatures(string json)
+    {
+        List<List<GeoPoint>> result = [];
 
         if (TryParseSingleJson(json, result))
         {
             return result;
         }
 
-        // Fallback for NDJSON / JSONL where each line is a Feature object.
         string[] lines = json.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
         foreach (string line in lines)
         {
@@ -273,14 +274,14 @@ public partial class Form1 : Form
             }
             catch (JsonException)
             {
-                // Skip malformed lines and continue loading remaining features.
+                // Continue if a line is malformed.
             }
         }
 
         return result;
     }
 
-    private static bool TryParseSingleJson(string json, List<List<PointF>> destination)
+    private static bool TryParseSingleJson(string json, List<List<GeoPoint>> destination)
     {
         try
         {
@@ -294,44 +295,44 @@ public partial class Form1 : Form
         }
     }
 
-    private static void ExtractFromRoot(JsonElement root, List<List<PointF>> destination)
+    private static void ExtractFromRoot(JsonElement root, List<List<GeoPoint>> destination)
     {
         if (root.ValueKind != JsonValueKind.Object)
         {
             return;
         }
 
-        if (root.TryGetProperty("type", out JsonElement rootType) && rootType.ValueKind == JsonValueKind.String)
-        {
-            string? type = rootType.GetString();
-            if (type == "FeatureCollection" &&
-                root.TryGetProperty("features", out JsonElement featuresElement) &&
-                featuresElement.ValueKind == JsonValueKind.Array)
-            {
-                foreach (JsonElement feature in featuresElement.EnumerateArray())
-                {
-                    ExtractFeatureGeometry(feature, destination);
-                }
-                return;
-            }
-
-            if (type == "Feature")
-            {
-                ExtractFeatureGeometry(root, destination);
-            }
-        }
-    }
-
-    private static void ExtractFeatureGeometry(JsonElement feature, List<List<PointF>> destination)
-    {
-        if (!feature.TryGetProperty("geometry", out JsonElement geometry) ||
-            geometry.ValueKind != JsonValueKind.Object)
+        if (!root.TryGetProperty("type", out JsonElement rootType) || rootType.ValueKind != JsonValueKind.String)
         {
             return;
         }
 
-        if (!geometry.TryGetProperty("type", out JsonElement typeElement) ||
-            typeElement.ValueKind != JsonValueKind.String)
+        string? type = rootType.GetString();
+        if (type == "FeatureCollection" &&
+            root.TryGetProperty("features", out JsonElement featuresElement) &&
+            featuresElement.ValueKind == JsonValueKind.Array)
+        {
+            foreach (JsonElement feature in featuresElement.EnumerateArray())
+            {
+                ExtractFeatureGeometry(feature, destination);
+            }
+            return;
+        }
+
+        if (type == "Feature")
+        {
+            ExtractFeatureGeometry(root, destination);
+        }
+    }
+
+    private static void ExtractFeatureGeometry(JsonElement feature, List<List<GeoPoint>> destination)
+    {
+        if (!feature.TryGetProperty("geometry", out JsonElement geometry) || geometry.ValueKind != JsonValueKind.Object)
+        {
+            return;
+        }
+
+        if (!geometry.TryGetProperty("type", out JsonElement typeElement) || typeElement.ValueKind != JsonValueKind.String)
         {
             return;
         }
@@ -344,94 +345,113 @@ public partial class Form1 : Form
         string? geometryType = typeElement.GetString();
         if (geometryType == "Polygon")
         {
-            AddPolygon(coords, destination);
+            AddPolygonExteriorRing(coords, destination);
         }
         else if (geometryType == "MultiPolygon")
         {
             foreach (JsonElement polygonCoords in coords.EnumerateArray())
             {
-                AddPolygon(polygonCoords, destination);
+                AddPolygonExteriorRing(polygonCoords, destination);
             }
         }
     }
 
-    private static void AddPolygon(JsonElement polygonCoords, List<List<PointF>> destination)
+    private static void AddPolygonExteriorRing(JsonElement polygonCoords, List<List<GeoPoint>> destination)
     {
-        if (polygonCoords.ValueKind != JsonValueKind.Array)
+        if (polygonCoords.ValueKind != JsonValueKind.Array || polygonCoords.GetArrayLength() == 0)
         {
             return;
         }
 
-        foreach (JsonElement ring in polygonCoords.EnumerateArray())
+        JsonElement exteriorRing = polygonCoords[0];
+        if (exteriorRing.ValueKind != JsonValueKind.Array)
         {
-            if (ring.ValueKind != JsonValueKind.Array)
+            return;
+        }
+
+        List<GeoPoint> points = [];
+        foreach (JsonElement coord in exteriorRing.EnumerateArray())
+        {
+            if (coord.ValueKind != JsonValueKind.Array || coord.GetArrayLength() < 2)
             {
                 continue;
             }
 
-            List<PointF> points = [];
-            foreach (JsonElement coord in ring.EnumerateArray())
-            {
-                if (coord.ValueKind != JsonValueKind.Array || coord.GetArrayLength() < 2)
-                {
-                    continue;
-                }
+            points.Add(new GeoPoint(coord[0].GetDouble(), coord[1].GetDouble()));
+        }
 
-                float lon = (float)coord[0].GetDouble();
-                float lat = (float)coord[1].GetDouble();
-                points.Add(new PointF(lon, lat));
-            }
-
-            if (points.Count >= 3)
-            {
-                destination.Add(points);
-            }
+        if (points.Count >= 3)
+        {
+            destination.Add(points);
         }
     }
 
     private void pnlViewer_Paint(object sender, PaintEventArgs e)
     {
         e.Graphics.Clear(Color.White);
-
-        if (_currentFeatureIndex < 0 || _currentFeatureIndex >= _features.Count)
-        {
-            DrawCenteredText(e.Graphics, "Load a GeoJSON file to begin.", pnlViewer.ClientRectangle);
-            return;
-        }
-
-        List<PointF> feature = _features[_currentFeatureIndex];
-        if (feature.Count < 3)
-        {
-            return;
-        }
-
-        float minX = feature.Min(p => p.X);
-        float maxX = feature.Max(p => p.X);
-        float minY = feature.Min(p => p.Y);
-        float maxY = feature.Max(p => p.Y);
+        e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
         RectangleF viewport = pnlViewer.ClientRectangle;
-        float width = Math.Max(maxX - minX, 0.0001f);
-        float height = Math.Max(maxY - minY, 0.0001f);
-        float padding = 12f;
+        float centerScreenX = viewport.Width / 2f;
+        float centerScreenY = viewport.Height / 2f;
+        double metersPerPixel = trkScale.Value * PixelSizeMetersAt96Dpi;
 
-        float scaleX = (viewport.Width - 2 * padding) / width;
-        float scaleY = (viewport.Height - 2 * padding) / height;
-        float scale = Math.Min(scaleX, scaleY);
-
-        PointF[] screenPoints = feature.Select(p =>
+        if (_visibleBuildingsProjected.Count == 0)
         {
-            float x = padding + (p.X - minX) * scale;
-            float y = padding + (maxY - p.Y) * scale;
-            return new PointF(x, y);
-        }).ToArray();
+            DrawCenteredText(e.Graphics, "No buildings loaded in 500m radius.", pnlViewer.ClientRectangle);
+        }
+        else
+        {
+            using SolidBrush fillBrush = new(Color.FromArgb(70, 0, 120, 215));
+            using Pen outlinePen = new(Color.FromArgb(0, 70, 140), 1.2f);
 
-        using SolidBrush fillBrush = new(Color.FromArgb(64, 0, 120, 215));
-        using Pen outlinePen = new(Color.FromArgb(0, 80, 150), 1.5f);
+            foreach (List<MapPoint> ring in _visibleBuildingsProjected)
+            {
+                if (ring.Count < 3)
+                {
+                    continue;
+                }
 
-        e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-        e.Graphics.FillPolygon(fillBrush, screenPoints);
-        e.Graphics.DrawPolygon(outlinePen, screenPoints);
+                PointF[] screenPoints = ring.Select(point =>
+                {
+                    float x = (float)((point.X - _centerX) / metersPerPixel + centerScreenX);
+                    float y = (float)(centerScreenY - (point.Y - _centerY) / metersPerPixel);
+                    return new PointF(x, y);
+                }).ToArray();
+
+                e.Graphics.FillPolygon(fillBrush, screenPoints);
+                e.Graphics.DrawPolygon(outlinePen, screenPoints);
+            }
+        }
+
+        DrawRadiusGuide(e.Graphics, centerScreenX, centerScreenY, metersPerPixel);
+        DrawCrosshairAndLabel(e.Graphics, centerScreenX, centerScreenY);
+    }
+
+    private void DrawRadiusGuide(Graphics g, float centerX, float centerY, double metersPerPixel)
+    {
+        float radiusPixels = (float)(FilterRadiusMeters / metersPerPixel);
+        if (radiusPixels <= 1)
+        {
+            return;
+        }
+
+        using Pen radiusPen = new(Color.LightGray, 1f)
+        {
+            DashStyle = System.Drawing.Drawing2D.DashStyle.Dash
+        };
+        g.DrawEllipse(radiusPen, centerX - radiusPixels, centerY - radiusPixels, radiusPixels * 2, radiusPixels * 2);
+    }
+
+    private void DrawCrosshairAndLabel(Graphics g, float centerX, float centerY)
+    {
+        using Pen crosshairPen = new(Color.DarkRed, 1.5f);
+        g.DrawLine(crosshairPen, centerX - 10, centerY, centerX + 10, centerY);
+        g.DrawLine(crosshairPen, centerX, centerY - 10, centerX, centerY + 10);
+
+        string centerLabel = $"{_centerLat:0.000000}, {_centerLon:0.000000}";
+        using SolidBrush textBrush = new(Color.DarkRed);
+        g.DrawString(centerLabel, SystemFonts.DefaultFont, textBrush, centerX + 12, centerY + 8);
     }
 
     private static void DrawCenteredText(Graphics graphics, string text, Rectangle bounds)
@@ -446,14 +466,33 @@ public partial class Form1 : Form
         graphics.DrawString(text, SystemFonts.DefaultFont, brush, bounds, format);
     }
 
-    private void UpdateFeatureLabel()
+    private void UpdateScaleLabel()
     {
-        if (_features.Count == 0 || _currentFeatureIndex < 0)
-        {
-            lblFeatureIndex.Text = "Feature: 0 / 0";
-            return;
-        }
-
-        lblFeatureIndex.Text = $"Feature: {_currentFeatureIndex + 1} / {_features.Count}";
+        lblScaleValue.Text = $"1 : {trkScale.Value}";
     }
+
+    private void UpdateBuildingCountLabel()
+    {
+        lblBuildingCount.Text = $"Buildings in 500m: {_visibleBuildingsProjected.Count}";
+    }
+
+    private bool TryGetCenterFromInputs(out double lat, out double lon)
+    {
+        bool parsedLat = double.TryParse(txtLat.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out lat);
+        bool parsedLon = double.TryParse(txtLon.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out lon);
+        return parsedLat && parsedLon;
+    }
+
+    private static (double X, double Y) ProjectToWebMercator(double lon, double lat)
+    {
+        double clampedLat = Math.Max(-MaxMercatorLatitude, Math.Min(MaxMercatorLatitude, lat));
+        double lonRad = lon * Math.PI / 180.0;
+        double latRad = clampedLat * Math.PI / 180.0;
+        double x = EarthRadiusMeters * lonRad;
+        double y = EarthRadiusMeters * Math.Log(Math.Tan(Math.PI / 4.0 + latRad / 2.0));
+        return (x, y);
+    }
+
+    private readonly record struct GeoPoint(double Lon, double Lat);
+    private readonly record struct MapPoint(double X, double Y);
 }
