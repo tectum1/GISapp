@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -21,6 +22,7 @@ public partial class Form1 : Form
     {
         InitializeComponent();
 
+        txtAddress.Text = "4600 Silver Hill Rd, Washington, DC 20233";
         txtLat.Text = "39.00000";
         txtLon.Text = "-94.00000";
         txtDownloadDir.Text = Directory.GetCurrentDirectory();
@@ -96,6 +98,49 @@ public partial class Form1 : Form
     private void Log(string message)
     {
         txtLog.AppendText(message + Environment.NewLine);
+    }
+
+    private async void btnGeocode_Click(object sender, EventArgs e)
+    {
+        btnGeocode.Enabled = false;
+        lblGeocodeStatus.Text = "Geocoding...";
+
+        try
+        {
+            CensusGeocoder.GeocodeResult? result = await CensusGeocoder.GeocodeAddressAsync(txtAddress.Text);
+            if (result == null)
+            {
+                lblGeocodeStatus.Text = "No address match found.";
+                return;
+            }
+
+            txtGeoLat.Text = result.Latitude.ToString("0.000000", CultureInfo.InvariantCulture);
+            txtGeoLon.Text = result.Longitude.ToString("0.000000", CultureInfo.InvariantCulture);
+            lblGeocodeStatus.Text = $"Matched: {result.MatchedAddress}";
+        }
+        catch (Exception ex)
+        {
+            lblGeocodeStatus.Text = "Geocoding failed.";
+            MessageBox.Show(ex.Message, "Geocoding Error");
+        }
+        finally
+        {
+            btnGeocode.Enabled = true;
+        }
+    }
+
+    private void btnUseCoordinates_Click(object sender, EventArgs e)
+    {
+        if (!double.TryParse(txtGeoLat.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out _) ||
+            !double.TryParse(txtGeoLon.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out _))
+        {
+            MessageBox.Show("Geocode an address first.");
+            return;
+        }
+
+        txtLat.Text = txtGeoLat.Text;
+        txtLon.Text = txtGeoLon.Text;
+        tabControlMain.SelectedTab = tabFootprints;
     }
 
     private void btnLoadGeoJson_Click(object sender, EventArgs e)

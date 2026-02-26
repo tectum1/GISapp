@@ -5,6 +5,22 @@ namespace Footprints.WinForms;
 
 partial class Form1
 {
+    private IContainer? components = null;
+
+    private TabControl tabControlMain;
+    private TabPage tabGeocode;
+    private TabPage tabFootprints;
+
+    private Label lblAddress;
+    private TextBox txtAddress;
+    private Button btnGeocode;
+    private Label lblGeoLat;
+    private TextBox txtGeoLat;
+    private Label lblGeoLon;
+    private TextBox txtGeoLon;
+    private Button btnUseCoordinates;
+    private Label lblGeocodeStatus;
+
     private TextBox txtLat;
     private TextBox txtLon;
     private TextBox txtDownloadDir;
@@ -20,15 +36,6 @@ partial class Form1
     private Label lblFeatureIndex;
     private Panel pnlViewer;
 
-    /// <summary>
-    /// Required designer variable.
-    /// </summary>
-    private IContainer? components = null;
-
-    /// <summary>
-    /// Clean up any resources being used.
-    /// </summary>
-    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
     protected override void Dispose(bool disposing)
     {
         if (disposing && (components != null))
@@ -39,14 +46,20 @@ partial class Form1
         base.Dispose(disposing);
     }
 
-    #region Windows Form Designer generated code
-
-    /// <summary>
-    /// Required method for Designer support - do not modify
-    /// the contents of this method with the code editor.
-    /// </summary>
     private void InitializeComponent()
     {
+        this.tabControlMain = new TabControl();
+        this.tabGeocode = new TabPage();
+        this.tabFootprints = new TabPage();
+        this.lblAddress = new Label();
+        this.txtAddress = new TextBox();
+        this.btnGeocode = new Button();
+        this.lblGeoLat = new Label();
+        this.txtGeoLat = new TextBox();
+        this.lblGeoLon = new Label();
+        this.txtGeoLon = new TextBox();
+        this.btnUseCoordinates = new Button();
+        this.lblGeocodeStatus = new Label();
         this.txtLat = new TextBox();
         this.txtLon = new TextBox();
         this.txtDownloadDir = new TextBox();
@@ -61,7 +74,142 @@ partial class Form1
         this.lblDownloadDir = new Label();
         this.lblFeatureIndex = new Label();
         this.pnlViewer = new Panel();
+        this.tabControlMain.SuspendLayout();
+        this.tabGeocode.SuspendLayout();
+        this.tabFootprints.SuspendLayout();
         this.SuspendLayout();
+        // 
+        // tabControlMain
+        // 
+        this.tabControlMain.Controls.Add(this.tabGeocode);
+        this.tabControlMain.Controls.Add(this.tabFootprints);
+        this.tabControlMain.Location = new System.Drawing.Point(12, 12);
+        this.tabControlMain.Name = "tabControlMain";
+        this.tabControlMain.SelectedIndex = 0;
+        this.tabControlMain.Size = new System.Drawing.Size(916, 596);
+        this.tabControlMain.TabIndex = 0;
+        // 
+        // tabGeocode
+        // 
+        this.tabGeocode.Controls.Add(this.lblAddress);
+        this.tabGeocode.Controls.Add(this.txtAddress);
+        this.tabGeocode.Controls.Add(this.btnGeocode);
+        this.tabGeocode.Controls.Add(this.lblGeoLat);
+        this.tabGeocode.Controls.Add(this.txtGeoLat);
+        this.tabGeocode.Controls.Add(this.lblGeoLon);
+        this.tabGeocode.Controls.Add(this.txtGeoLon);
+        this.tabGeocode.Controls.Add(this.btnUseCoordinates);
+        this.tabGeocode.Controls.Add(this.lblGeocodeStatus);
+        this.tabGeocode.Location = new System.Drawing.Point(4, 24);
+        this.tabGeocode.Name = "tabGeocode";
+        this.tabGeocode.Padding = new Padding(3);
+        this.tabGeocode.Size = new System.Drawing.Size(908, 568);
+        this.tabGeocode.TabIndex = 0;
+        this.tabGeocode.Text = "Address -> Lat/Lon";
+        this.tabGeocode.UseVisualStyleBackColor = true;
+        // 
+        // tabFootprints
+        // 
+        this.tabFootprints.Controls.Add(this.pnlViewer);
+        this.tabFootprints.Controls.Add(this.lblFeatureIndex);
+        this.tabFootprints.Controls.Add(this.btnNext);
+        this.tabFootprints.Controls.Add(this.btnPlayPause);
+        this.tabFootprints.Controls.Add(this.btnPrev);
+        this.tabFootprints.Controls.Add(this.btnLoadGeoJson);
+        this.tabFootprints.Controls.Add(this.txtLog);
+        this.tabFootprints.Controls.Add(this.btnRun);
+        this.tabFootprints.Controls.Add(this.txtDownloadDir);
+        this.tabFootprints.Controls.Add(this.lblDownloadDir);
+        this.tabFootprints.Controls.Add(this.txtLon);
+        this.tabFootprints.Controls.Add(this.lblLon);
+        this.tabFootprints.Controls.Add(this.txtLat);
+        this.tabFootprints.Controls.Add(this.lblLat);
+        this.tabFootprints.Location = new System.Drawing.Point(4, 24);
+        this.tabFootprints.Name = "tabFootprints";
+        this.tabFootprints.Padding = new Padding(3);
+        this.tabFootprints.Size = new System.Drawing.Size(908, 568);
+        this.tabFootprints.TabIndex = 1;
+        this.tabFootprints.Text = "Lat/Lon -> Footprints";
+        this.tabFootprints.UseVisualStyleBackColor = true;
+        // 
+        // lblAddress
+        // 
+        this.lblAddress.AutoSize = true;
+        this.lblAddress.Location = new System.Drawing.Point(20, 24);
+        this.lblAddress.Name = "lblAddress";
+        this.lblAddress.Size = new System.Drawing.Size(109, 15);
+        this.lblAddress.TabIndex = 0;
+        this.lblAddress.Text = "Address (one line)";
+        // 
+        // txtAddress
+        // 
+        this.txtAddress.Location = new System.Drawing.Point(20, 46);
+        this.txtAddress.Name = "txtAddress";
+        this.txtAddress.Size = new System.Drawing.Size(760, 23);
+        this.txtAddress.TabIndex = 1;
+        // 
+        // btnGeocode
+        // 
+        this.btnGeocode.Location = new System.Drawing.Point(794, 45);
+        this.btnGeocode.Name = "btnGeocode";
+        this.btnGeocode.Size = new System.Drawing.Size(90, 25);
+        this.btnGeocode.TabIndex = 2;
+        this.btnGeocode.Text = "Geocode";
+        this.btnGeocode.UseVisualStyleBackColor = true;
+        this.btnGeocode.Click += new System.EventHandler(this.btnGeocode_Click);
+        // 
+        // lblGeoLat
+        // 
+        this.lblGeoLat.AutoSize = true;
+        this.lblGeoLat.Location = new System.Drawing.Point(20, 90);
+        this.lblGeoLat.Name = "lblGeoLat";
+        this.lblGeoLat.Size = new System.Drawing.Size(50, 15);
+        this.lblGeoLat.TabIndex = 3;
+        this.lblGeoLat.Text = "Latitude";
+        // 
+        // txtGeoLat
+        // 
+        this.txtGeoLat.Location = new System.Drawing.Point(20, 112);
+        this.txtGeoLat.Name = "txtGeoLat";
+        this.txtGeoLat.ReadOnly = true;
+        this.txtGeoLat.Size = new System.Drawing.Size(170, 23);
+        this.txtGeoLat.TabIndex = 4;
+        // 
+        // lblGeoLon
+        // 
+        this.lblGeoLon.AutoSize = true;
+        this.lblGeoLon.Location = new System.Drawing.Point(210, 90);
+        this.lblGeoLon.Name = "lblGeoLon";
+        this.lblGeoLon.Size = new System.Drawing.Size(59, 15);
+        this.lblGeoLon.TabIndex = 5;
+        this.lblGeoLon.Text = "Longitude";
+        // 
+        // txtGeoLon
+        // 
+        this.txtGeoLon.Location = new System.Drawing.Point(210, 112);
+        this.txtGeoLon.Name = "txtGeoLon";
+        this.txtGeoLon.ReadOnly = true;
+        this.txtGeoLon.Size = new System.Drawing.Size(170, 23);
+        this.txtGeoLon.TabIndex = 6;
+        // 
+        // btnUseCoordinates
+        // 
+        this.btnUseCoordinates.Location = new System.Drawing.Point(20, 150);
+        this.btnUseCoordinates.Name = "btnUseCoordinates";
+        this.btnUseCoordinates.Size = new System.Drawing.Size(180, 25);
+        this.btnUseCoordinates.TabIndex = 7;
+        this.btnUseCoordinates.Text = "Use In Footprints Tab";
+        this.btnUseCoordinates.UseVisualStyleBackColor = true;
+        this.btnUseCoordinates.Click += new System.EventHandler(this.btnUseCoordinates_Click);
+        // 
+        // lblGeocodeStatus
+        // 
+        this.lblGeocodeStatus.BorderStyle = BorderStyle.FixedSingle;
+        this.lblGeocodeStatus.Location = new System.Drawing.Point(20, 191);
+        this.lblGeocodeStatus.Name = "lblGeocodeStatus";
+        this.lblGeocodeStatus.Size = new System.Drawing.Size(864, 88);
+        this.lblGeocodeStatus.TabIndex = 8;
+        this.lblGeocodeStatus.Text = "Status: idle";
         // 
         // lblLat
         // 
@@ -113,7 +261,7 @@ partial class Form1
         // 
         // btnRun
         // 
-        this.btnRun.Location = new System.Drawing.Point(770, 80);
+        this.btnRun.Location = new System.Drawing.Point(760, 80);
         this.btnRun.Name = "btnRun";
         this.btnRun.Size = new System.Drawing.Size(120, 25);
         this.btnRun.TabIndex = 6;
@@ -176,44 +324,33 @@ partial class Form1
         this.pnlViewer.BorderStyle = BorderStyle.FixedSingle;
         this.pnlViewer.Location = new System.Drawing.Point(16, 155);
         this.pnlViewer.Name = "pnlViewer";
-        this.pnlViewer.Size = new System.Drawing.Size(874, 230);
+        this.pnlViewer.Size = new System.Drawing.Size(864, 260);
         this.pnlViewer.TabIndex = 12;
         this.pnlViewer.Paint += new PaintEventHandler(this.pnlViewer_Paint);
         // 
         // txtLog
         // 
-        this.txtLog.Location = new System.Drawing.Point(16, 395);
+        this.txtLog.Location = new System.Drawing.Point(16, 425);
         this.txtLog.Multiline = true;
         this.txtLog.Name = "txtLog";
         this.txtLog.ReadOnly = true;
         this.txtLog.ScrollBars = ScrollBars.Vertical;
-        this.txtLog.Size = new System.Drawing.Size(874, 145);
+        this.txtLog.Size = new System.Drawing.Size(864, 120);
         this.txtLog.TabIndex = 13;
         // 
         // Form1
         // 
         this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         this.AutoScaleMode = AutoScaleMode.Font;
-        this.ClientSize = new System.Drawing.Size(920, 560);
-        this.Controls.Add(this.pnlViewer);
-        this.Controls.Add(this.lblFeatureIndex);
-        this.Controls.Add(this.btnNext);
-        this.Controls.Add(this.btnPlayPause);
-        this.Controls.Add(this.btnPrev);
-        this.Controls.Add(this.btnLoadGeoJson);
-        this.Controls.Add(this.txtLog);
-        this.Controls.Add(this.btnRun);
-        this.Controls.Add(this.txtDownloadDir);
-        this.Controls.Add(this.lblDownloadDir);
-        this.Controls.Add(this.txtLon);
-        this.Controls.Add(this.lblLon);
-        this.Controls.Add(this.txtLat);
-        this.Controls.Add(this.lblLat);
+        this.ClientSize = new System.Drawing.Size(940, 620);
+        this.Controls.Add(this.tabControlMain);
         this.Name = "Form1";
-        this.Text = "Footprints Downloader";
+        this.Text = "Footprints Tool";
+        this.tabControlMain.ResumeLayout(false);
+        this.tabGeocode.ResumeLayout(false);
+        this.tabGeocode.PerformLayout();
+        this.tabFootprints.ResumeLayout(false);
+        this.tabFootprints.PerformLayout();
         this.ResumeLayout(false);
-        this.PerformLayout();
     }
-
-    #endregion
 }
