@@ -9,10 +9,16 @@ partial class Form1
     private TextBox txtLon;
     private TextBox txtDownloadDir;
     private Button btnRun;
+    private Button btnLoadGeoJson;
+    private Button btnPrev;
+    private Button btnPlayPause;
+    private Button btnNext;
     private TextBox txtLog;
     private Label lblLat;
     private Label lblLon;
     private Label lblDownloadDir;
+    private Label lblFeatureIndex;
+    private Panel pnlViewer;
 
     /// <summary>
     /// Required designer variable.
@@ -45,10 +51,16 @@ partial class Form1
         this.txtLon = new TextBox();
         this.txtDownloadDir = new TextBox();
         this.btnRun = new Button();
+        this.btnLoadGeoJson = new Button();
+        this.btnPrev = new Button();
+        this.btnPlayPause = new Button();
+        this.btnNext = new Button();
         this.txtLog = new TextBox();
         this.lblLat = new Label();
         this.lblLon = new Label();
         this.lblDownloadDir = new Label();
+        this.lblFeatureIndex = new Label();
+        this.pnlViewer = new Panel();
         this.SuspendLayout();
         // 
         // lblLat
@@ -109,21 +121,86 @@ partial class Form1
         this.btnRun.UseVisualStyleBackColor = true;
         this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
         // 
+        // btnLoadGeoJson
+        // 
+        this.btnLoadGeoJson.Location = new System.Drawing.Point(16, 120);
+        this.btnLoadGeoJson.Name = "btnLoadGeoJson";
+        this.btnLoadGeoJson.Size = new System.Drawing.Size(120, 25);
+        this.btnLoadGeoJson.TabIndex = 7;
+        this.btnLoadGeoJson.Text = "Load GeoJSON";
+        this.btnLoadGeoJson.UseVisualStyleBackColor = true;
+        this.btnLoadGeoJson.Click += new System.EventHandler(this.btnLoadGeoJson_Click);
+        // 
+        // btnPrev
+        // 
+        this.btnPrev.Location = new System.Drawing.Point(150, 120);
+        this.btnPrev.Name = "btnPrev";
+        this.btnPrev.Size = new System.Drawing.Size(70, 25);
+        this.btnPrev.TabIndex = 8;
+        this.btnPrev.Text = "Prev";
+        this.btnPrev.UseVisualStyleBackColor = true;
+        this.btnPrev.Click += new System.EventHandler(this.btnPrev_Click);
+        // 
+        // btnPlayPause
+        // 
+        this.btnPlayPause.Location = new System.Drawing.Point(230, 120);
+        this.btnPlayPause.Name = "btnPlayPause";
+        this.btnPlayPause.Size = new System.Drawing.Size(90, 25);
+        this.btnPlayPause.TabIndex = 9;
+        this.btnPlayPause.Text = "Play";
+        this.btnPlayPause.UseVisualStyleBackColor = true;
+        this.btnPlayPause.Click += new System.EventHandler(this.btnPlayPause_Click);
+        // 
+        // btnNext
+        // 
+        this.btnNext.Location = new System.Drawing.Point(330, 120);
+        this.btnNext.Name = "btnNext";
+        this.btnNext.Size = new System.Drawing.Size(70, 25);
+        this.btnNext.TabIndex = 10;
+        this.btnNext.Text = "Next";
+        this.btnNext.UseVisualStyleBackColor = true;
+        this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+        // 
+        // lblFeatureIndex
+        // 
+        this.lblFeatureIndex.AutoSize = true;
+        this.lblFeatureIndex.Location = new System.Drawing.Point(420, 125);
+        this.lblFeatureIndex.Name = "lblFeatureIndex";
+        this.lblFeatureIndex.Size = new System.Drawing.Size(79, 15);
+        this.lblFeatureIndex.TabIndex = 11;
+        this.lblFeatureIndex.Text = "Feature: 0 / 0";
+        // 
+        // pnlViewer
+        // 
+        this.pnlViewer.BackColor = System.Drawing.Color.White;
+        this.pnlViewer.BorderStyle = BorderStyle.FixedSingle;
+        this.pnlViewer.Location = new System.Drawing.Point(16, 155);
+        this.pnlViewer.Name = "pnlViewer";
+        this.pnlViewer.Size = new System.Drawing.Size(874, 230);
+        this.pnlViewer.TabIndex = 12;
+        this.pnlViewer.Paint += new PaintEventHandler(this.pnlViewer_Paint);
+        // 
         // txtLog
         // 
-        this.txtLog.Location = new System.Drawing.Point(16, 120);
+        this.txtLog.Location = new System.Drawing.Point(16, 395);
         this.txtLog.Multiline = true;
         this.txtLog.Name = "txtLog";
         this.txtLog.ReadOnly = true;
         this.txtLog.ScrollBars = ScrollBars.Vertical;
-        this.txtLog.Size = new System.Drawing.Size(874, 420);
-        this.txtLog.TabIndex = 7;
+        this.txtLog.Size = new System.Drawing.Size(874, 145);
+        this.txtLog.TabIndex = 13;
         // 
         // Form1
         // 
         this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         this.AutoScaleMode = AutoScaleMode.Font;
         this.ClientSize = new System.Drawing.Size(920, 560);
+        this.Controls.Add(this.pnlViewer);
+        this.Controls.Add(this.lblFeatureIndex);
+        this.Controls.Add(this.btnNext);
+        this.Controls.Add(this.btnPlayPause);
+        this.Controls.Add(this.btnPrev);
+        this.Controls.Add(this.btnLoadGeoJson);
         this.Controls.Add(this.txtLog);
         this.Controls.Add(this.btnRun);
         this.Controls.Add(this.txtDownloadDir);
