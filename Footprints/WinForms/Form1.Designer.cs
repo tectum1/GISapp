@@ -305,7 +305,7 @@ partial class Form1
         // trkScale
         // 
         this.trkScale.Location = new System.Drawing.Point(200, 117);
-        this.trkScale.Maximum = 5000;
+        this.trkScale.Maximum = 10000;
         this.trkScale.Minimum = 500;
         this.trkScale.Name = "trkScale";
         this.trkScale.Size = new System.Drawing.Size(210, 45);
@@ -332,7 +332,7 @@ partial class Form1
         this.lblBuildingCount.Name = "lblBuildingCount";
         this.lblBuildingCount.Size = new System.Drawing.Size(122, 15);
         this.lblBuildingCount.TabIndex = 12;
-        this.lblBuildingCount.Text = "Buildings in 500m: 0";
+        this.lblBuildingCount.Text = "Buildings in 1000m: 0";
         // 
         // pnlViewer
         // 

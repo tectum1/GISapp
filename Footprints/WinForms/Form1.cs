@@ -15,7 +15,7 @@ public partial class Form1 : Form
     private double _centerX;
     private double _centerY;
 
-    private const double FilterRadiusMeters = 500.0;
+    private const double FilterRadiusMeters = 1000.0;
     private const double PixelSizeMetersAt96Dpi = 0.0254 / 96.0;
     private const double EarthRadiusMeters = 6378137.0;
     private const double MaxMercatorLatitude = 85.05112878;
@@ -398,7 +398,7 @@ public partial class Form1 : Form
 
         if (_visibleBuildingsProjected.Count == 0)
         {
-            DrawCenteredText(e.Graphics, "No buildings loaded in 500m radius.", pnlViewer.ClientRectangle);
+            DrawCenteredText(e.Graphics, "No buildings loaded in 1000m radius.", pnlViewer.ClientRectangle);
         }
         else
         {
@@ -473,7 +473,7 @@ public partial class Form1 : Form
 
     private void UpdateBuildingCountLabel()
     {
-        lblBuildingCount.Text = $"Buildings in 500m: {_visibleBuildingsProjected.Count}";
+        lblBuildingCount.Text = $"Buildings in 1000m: {_visibleBuildingsProjected.Count}";
     }
 
     private bool TryGetCenterFromInputs(out double lat, out double lon)

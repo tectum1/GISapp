@@ -9,7 +9,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aabace8c-a358-4148-bb95-27abfb33e912" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Footprints/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Footprints/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WinForms/Form1.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/Form1.Designer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WinForms/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/Form1.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WinForms/bin/Debug/net10.0-windows/WinForms.dll" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/bin/Debug/net10.0-windows/WinForms.dll" afterDir="false" />
@@ -133,7 +132,7 @@
       <option name="presentableId" value="Default" />
       <updated>1772027398570</updated>
       <workItem from="1772027401325" duration="1128000" />
-      <workItem from="1772028555127" duration="5058000" />
+      <workItem from="1772028555127" duration="5490000" />
     </task>
     <servers />
   </component>
