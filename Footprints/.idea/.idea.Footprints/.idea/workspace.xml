@@ -9,13 +9,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aabace8c-a358-4148-bb95-27abfb33e912" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/WinForms/Form1.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/Form1.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Footprints/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Footprints/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Console/obj/Debug/net10.0-windows/Console.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Console/obj/Debug/net10.0-windows/Console.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Console/obj/Debug/net10.0-windows/Console.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Console/obj/Debug/net10.0-windows/Console.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Console/obj/Debug/net10.0-windows/Console.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Console/obj/Debug/net10.0-windows/Console.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/ApiClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Core/ApiClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/bin/Debug/net10.0-windows/Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Core/bin/Debug/net10.0-windows/Core.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/bin/Debug/net10.0-windows/Core.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Core/bin/Debug/net10.0-windows/Core.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/obj/Debug/net10.0-windows/Core.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Core/obj/Debug/net10.0-windows/Core.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/obj/Debug/net10.0-windows/Core.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Core/obj/Debug/net10.0-windows/Core.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/obj/Debug/net10.0-windows/Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Core/obj/Debug/net10.0-windows/Core.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/obj/Debug/net10.0-windows/Core.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Core/obj/Debug/net10.0-windows/Core.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/obj/Debug/net10.0-windows/Core.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/Core/obj/Debug/net10.0-windows/Core.sourcelink.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/obj/Debug/net10.0-windows/ref/Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Core/obj/Debug/net10.0-windows/ref/Core.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/obj/Debug/net10.0-windows/refint/Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Core/obj/Debug/net10.0-windows/refint/Core.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WinForms/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/Form1.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WinForms/bin/Debug/net10.0-windows/Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/bin/Debug/net10.0-windows/Core.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WinForms/bin/Debug/net10.0-windows/Core.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/bin/Debug/net10.0-windows/Core.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WinForms/bin/Debug/net10.0-windows/WinForms.dll" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/bin/Debug/net10.0-windows/WinForms.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WinForms/bin/Debug/net10.0-windows/WinForms.exe" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/bin/Debug/net10.0-windows/WinForms.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WinForms/bin/Debug/net10.0-windows/WinForms.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/bin/Debug/net10.0-windows/WinForms.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.csproj.AssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.dll" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/WinForms/obj/Debug/net10.0-windows/WinForms.sourcelink.json" afterDir="false" />
@@ -63,23 +79,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Project.WinForms.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Project.WinForms.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Project.WinForms">
     <configuration name="Console" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
@@ -132,7 +149,11 @@
       <option name="presentableId" value="Default" />
       <updated>1772027398570</updated>
       <workItem from="1772027401325" duration="1128000" />
-      <workItem from="1772028555127" duration="5490000" />
+      <workItem from="1772028555127" duration="10000000" />
+      <workItem from="1772378228908" duration="7000" />
+      <workItem from="1772485919390" duration="92000" />
+      <workItem from="1772548359854" duration="358000" />
+      <workItem from="1772548797667" duration="1883000" />
     </task>
     <servers />
   </component>

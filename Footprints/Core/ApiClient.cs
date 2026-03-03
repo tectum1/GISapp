@@ -59,7 +59,7 @@ public class ApiClient
             if (File.Exists(targetFilePath))
             {
                 WriteLog("File exists! Download skipped.");
-                return "";
+                return targetFilePath;
             }
 
             using FileStream fileStream = File.Create(localFile);

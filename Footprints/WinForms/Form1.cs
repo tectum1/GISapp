@@ -68,10 +68,13 @@ public partial class Form1 : Form
             }
 
             Log($"downloadedFile: {downloadedFile}");
-            ApiClient.extractBF(downloadedFile);
-            Log("Extract complete.");
-
-            string extractedGeoJson = downloadedFile.Replace(".gz", "");
+            string extractedGeoJson = downloadedFile;
+            if (downloadedFile.EndsWith(".gz", StringComparison.OrdinalIgnoreCase))
+            {
+                ApiClient.extractBF(downloadedFile);
+                Log("Extract complete.");
+                extractedGeoJson = downloadedFile.Replace(".gz", "");
+            }
             if (File.Exists(extractedGeoJson))
             {
                 LoadGeoJson(extractedGeoJson, lat, lon);
